@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body style="display: flex; flex-direction: column">
+    <p id="turnCount" style="visibility: hidden">1</p>
+    <div class="container">
+      <div class="screen">
+        <div class="characterArea">
+          <div class="playerArea">
+            <div class="healthArea">
+              <h1 class="health">Your Health:</h1>
+              <h1 class="health" id="playerHealth">5</h1>
+            </div>
+            <img id="playerShake" src="stickman.png" />
+          </div>
+          <div class="enemyArea">
+            <div class="healthArea enemyHealthArea">
+              <h1 class="health">Enemy Health:</h1>
+              <h1 class="health" id="enemyHealth">5</h1>
+            </div>
+            <img id="enemyShake" src="stickman.png" />
+          </div>
+        </div>
+        <div id="action" class="actionArea">
+          Pick an action to start the game.
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="attackBtn" onClick="playerAttack()">Attack</button>
+        <button id="defendBtn" onClick="playerDefend()">Defend</button>
+        <button id="healBtn" onClick="playerHeal()">Heal</button>
+      </div>
+    </div>
+    <button onClick="reset()" style="margin-top: 20px">Reset</button>
+    <script src="index.js"></script>
+  </body>
+</html>
