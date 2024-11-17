@@ -31,20 +31,35 @@ function getActions(playerActionInt) {
       } else {
         //logic to defend and heal
         messageElement.innerHTML = "You defended, while the enemy recovered";
-        enemyHealed();
+        if (parseInt(document.getElementById("enemyHealth")) < 5) {
+          enemyHealed();
+        }
       }
       break;
     case 3: //You heal
+      let playerHealth = parseInt(
+        document.getElementById("playerHealth").innerHTML
+      );
+      if (playerHealth == 5) {
+        messageElement.innerHTML = "You're already at full health.";
+        return;
+      }
       if (enemyActionInt == 4) {
         //logic to heal and heal
         messageElement.innerHTML = "You healed, while the enemy recovered";
-        playerHealed();
-        enemyHealed();
+        if (parseInt(document.getElementById("playerHealth").innerHTML) < 5) {
+          playerHealed();
+        }
+        if (parseInt(document.getElementById("enemyHealth").innerHTML) < 5) {
+          enemyHealed();
+        }
       } else if (enemyActionInt == 3) {
         //logic to heal and defend
         messageElement.innerHTML =
           "You healed, while the enemy attempted to defend.";
-        playerHealed();
+        if (parseInt(document.getElementById("playerHealth").innerHTML) < 5) {
+          playerHealed();
+        }
       } else {
         //logic to heal and attack
         messageElement.innerHTML =
