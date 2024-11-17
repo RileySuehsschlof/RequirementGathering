@@ -4,7 +4,7 @@ function getActions(playerActionInt) {
   var enemyHealthElement = document.getElementById("enemyHealth");
   var messageElement = document.getElementById("action");
 
-  //Player: 1-attack 2-defend 3-heal
+  //Player: 1-attack 2-defend 3-heal 4-magic
   //Enemy: 1- attack 2-attack 3- defend 4-heal
   switch (playerActionInt) {
     case 1: //You attack
@@ -51,6 +51,35 @@ function getActions(playerActionInt) {
           "While you were healing, the enemy attacked you.";
       }
       break;
+    case 4: //You use magic
+      mana = parseInt(document.getElementById("playerMana").innerHTML);
+      if (mana == 0) {
+        messageElement.innerHTML =
+          "You don't have enough mana to cast a spell.";
+        return;
+      }
+
+      if (enemyActionInt == 1 || enemyActionInt == 2) {
+        //logic to use magic and attack
+        messageElement.innerHTML = "You cast a spell while being attacked.";
+        playerAttacked();
+        //Magic attack does 2 damage
+        enemyAttacked();
+        enemyAttacked();
+        playerUsedMana();
+      } else if (enemyActionInt == 3) {
+        //logic to use magic and defend
+        messageElement.innerHTML = "The enemy blocked your spell.";
+        playerUsedMana();
+      } else if (enemyActionInt == 4) {
+        //logic to use magic and heal
+        messageElement.innerHTML =
+          "You cast a spell while the enemy was healing.";
+        //enemy takes 2 damage but healed 1
+        playerUsedMana();
+        enemyAttacked();
+      }
+      break;
   }
   checkWin();
 }
@@ -74,6 +103,11 @@ function enemyHealed() {
   enemyHealth = enemyHealth + 1;
   document.getElementById("enemyHealth").innerHTML = enemyHealth;
 }
+function playerUsedMana() {
+  mana = parseInt(document.getElementById("playerMana").innerHTML);
+  mana = mana - 1;
+  document.getElementById("playerMana").innerHTML = mana;
+}
 function stopAnimation() {
   var player = document.getElementById("playerShake");
   var enemy = document.getElementById("enemyShake");
@@ -91,19 +125,19 @@ function restartAnimation() {
 function checkWin() {
   playerHealth = parseInt(document.getElementById("playerHealth").innerHTML);
   enemyHealth = parseInt(document.getElementById("enemyHealth").innerHTML);
-  if (playerHealth == 0 && enemyHealth == 0) {
+  if (playerHealth <= 0 && enemyHealth <= 0) {
     //logic for a tie
     win("It was a tie!");
     stopAnimation();
     document.getElementById("playerShake").style.transform = "rotate(-90deg)";
     document.getElementById("enemyShake").style.transform = "rotate(90deg)";
-  } else if (enemyHealth == 0) {
+  } else if (enemyHealth <= 0) {
     //logic for player win
     win("The player has won!");
     stopAnimation();
     document.getElementById("enemyShake").style.transform = "rotate(90deg)";
     document.getElementById("playerShake").style.transform = "rotate(0deg)";
-  } else if (playerHealth == 0) {
+  } else if (playerHealth <= 0) {
     //logic for enemy win
     win("The enemy has won!");
     stopAnimation();
@@ -115,6 +149,7 @@ function win(message) {
   document.getElementById("attackBtn").style.visibility = "hidden";
   document.getElementById("defendBtn").style.visibility = "hidden";
   document.getElementById("healBtn").style.visibility = "hidden";
+  document.getElementById("magicBtn").style.visibility = "hidden";
   document.getElementById("action").innerHTML = message;
 }
 function enemyTurn() {
@@ -123,21 +158,60 @@ function enemyTurn() {
 }
 function playerAttack() {
   getActions(1);
+  updateBars();
 }
 
 function playerDefend() {
   getActions(2);
+  updateBars();
 }
 function playerHeal() {
   getActions(3);
+  updateBars();
+}
+function playerMagicAttack() {
+  getActions(4);
+  updateBars();
+}
+function updateBars() {
+  let playerHealth = parseInt(
+    document.getElementById("playerHealth").textContent
+  );
+  let enemyHealth = parseInt(
+    document.getElementById("enemyHealth").textContent
+  );
+  let mana = parseInt(document.getElementById("playerMana").textContent);
+  const maxHealth = 5;
+  const maxMana = 2;
+
+  // Calculate the width percentages
+  const playerHealthPercent = (playerHealth / maxHealth) * 100;
+  const playerManaPercent = (mana / maxMana) * 100;
+  const enemyHealthPercent = (enemyHealth / maxHealth) * 100;
+
+  // Update bar widths
+  document.getElementById("playerHealthBar").style.width =
+    playerHealthPercent + "%";
+  document.getElementById("playerManaBar").style.width =
+    playerManaPercent + "%";
+  document.getElementById("enemyHealthBar").style.width =
+    enemyHealthPercent + "%";
+
+  // Update the displayed numbers
+  document.getElementById("playerHealthValue").textContent = playerHealth;
+  document.getElementById("playerManaValue").textContent = playerMana;
+  document.getElementById("enemyHealthValue").textContent = enemyHealth;
 }
 function reset() {
   document.getElementById("action").innerHTML =
     "Pick an action to start the game";
   document.getElementById("playerHealth").innerHTML = 5;
+  document.getElementById("playerMana").innerHTML = 2;
   document.getElementById("enemyHealth").innerHTML = 5;
   restartAnimation();
   document.getElementById("attackBtn").style.visibility = "visible";
   document.getElementById("defendBtn").style.visibility = "visible";
   document.getElementById("healBtn").style.visibility = "visible";
+  document.getElementById("magicBtn").style.visibility = "visible";
+  updateBars();
 }

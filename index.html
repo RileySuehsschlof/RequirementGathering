@@ -10,17 +10,33 @@
       <div class="screen">
         <div class="characterArea">
           <div class="playerArea">
-            <div class="healthArea">
-              <h1 class="health">Your Health:</h1>
-              <h1 class="health" id="playerHealth">5</h1>
+            <div class="playerResources">
+              <div class="healthArea">
+                <h1 class="health">Your Health:</h1>
+                <div class="barContainer">
+                  <div class="healthBar" id="playerHealthBar"></div>
+                  <div class="barValue" id="playerHealth">5</div>
+                </div>
+              </div>
+              <div class="manaArea">
+                <h1 class="mana">Your Mana:</h1>
+                <div class="barContainer">
+                  <div class="manaBar" id="playerManaBar"></div>
+                  <div class="barValue" id="playerMana">2</div>
+                </div>
+              </div>
+              <div class="healthArea enemyHealthArea">
+                <h1 class="health">Enemy Health:</h1>
+                <div class="barContainer">
+                  <div class="enemyHealthBar" id="enemyHealthBar"></div>
+                  <div class="barValue" id="enemyHealth">5</div>
+                </div>
+              </div>
             </div>
+
             <img id="playerShake" src="stickman.png" />
           </div>
           <div class="enemyArea">
-            <div class="healthArea enemyHealthArea">
-              <h1 class="health">Enemy Health:</h1>
-              <h1 class="health" id="enemyHealth">5</h1>
-            </div>
             <img id="enemyShake" src="stickman.png" />
           </div>
         </div>
@@ -31,6 +47,7 @@
 
       <div class="controls">
         <button id="attackBtn" onClick="playerAttack()">Attack</button>
+        <button id="magicBtn" onClick="playerMagicAttack()">Magic</button>
         <button id="defendBtn" onClick="playerDefend()">Defend</button>
         <button id="healBtn" onClick="playerHeal()">Heal</button>
       </div>

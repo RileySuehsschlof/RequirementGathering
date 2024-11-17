@@ -107,6 +107,44 @@ button {
   height: 20%;
   border-top: 10px solid black;
 }
+.barContainer {
+  position: relative;
+  width: 100px;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-left: 10px;
+}
+.healthBar {
+  height: 100%;
+  background-color: green;
+  width: 100%;
+  transition: width 0.3s ease-in-out;
+}
+.enemyHealthBar {
+  height: 100%;
+  background-color: red;
+  width: 100%;
+  transition: width 0.3s ease-in-out;
+}
+.manaBar {
+  height: 100%;
+  background-color: blue;
+  width: 100%;
+  transition: width 0.3s ease-in-out;
+}
+.barValue {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  z-index: 1;
+}
 .characterArea {
   width: 100%;
   height: 80%;
@@ -115,6 +153,7 @@ button {
 }
 .playerArea {
   /* Players half of screen */
+  padding-top: 40px;
   width: 50%;
   height: 100%;
   display: flex;
@@ -131,15 +170,30 @@ button {
   align-items: flex-end; /* Align items to the right */
   justify-content: flex-end; /* Move image to the bottom */
 }
+
+.mana,
 .health {
-  font-size: 20px;
-  padding-right: 10px;
+  font-size: 18px;
+  margin-right: 10px;
+  white-space: nowrap;
 }
+
+.playerResources {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.manaArea,
 .healthArea {
   display: flex;
   flex-direction: row;
-  padding: 10px;
+  justify-content: space-between; /* Distribute labels and values */
+  width: 100%;
 }
+
 .actionArea {
   text-align: center;
 }
