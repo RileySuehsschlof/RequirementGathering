@@ -31,7 +31,7 @@ function getActions(playerActionInt) {
       } else {
         //logic to defend and heal
         messageElement.innerHTML = "You defended, while the enemy recovered";
-        if (parseInt(document.getElementById("enemyHealth")) < 5) {
+        if (parseInt(document.getElementById("enemyHealth").innerText) < 5) {
           enemyHealed();
         }
       }
